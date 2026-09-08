@@ -1,4 +1,4 @@
-import { AXIOS_TIMEOUT_MS, COOKIE_NAME, ONE_YEAR_MS, decodeOAuthState } from "@shared/const";
+import { ADMIN_EMAIL, AXIOS_TIMEOUT_MS, COOKIE_NAME, ONE_YEAR_MS, decodeOAuthState } from "@shared/const";
 import { ForbiddenError } from "@shared/_core/errors";
 import axios, { type AxiosInstance } from "axios";
 import { parse as parseCookieHeader } from "cookie";
@@ -6,6 +6,7 @@ import type { Request } from "express";
 import { SignJWT, jwtVerify } from "jose";
 import type { User } from "../../drizzle/schema";
 import * as db from "../db";
+import { supabaseAdmin } from "../supabase";
 import { ENV } from "./env";
 import type {
   ExchangeTokenRequest,
@@ -256,6 +257,38 @@ class SDKServer {
   }
 
   async authenticateRequest(req: Request): Promise<AuthenticatedUser> {
+    const authorization = req.headers.authorization;
+    if (typeof authorization === "string" && authorization.startsWith("Bearer ")) {
+      const supabaseToken = authorization.slice("Bearer ".length);
+      const { data, error } = await supabaseAdmin.auth.getUser(supabaseToken);
+      if (!error && data.user) {
+        const email = data.user.email?.trim().toLowerCase() ?? null;
+        const openId = `supabase:${data.user.id}`;
+        await db.upsertUser({
+          openId,
+          name: data.user.user_metadata?.full_name ?? data.user.user_metadata?.name ?? email,
+          email,
+          loginMethod: "supabase",
+          role: email === ADMIN_EMAIL ? "admin" : "user",
+          lastSignedIn: new Date(),
+        });
+        const user = await db.getUserByOpenId(openId);
+        if (user) return user;
+        const now = new Date();
+        return {
+          id: -1,
+          openId,
+          name: data.user.user_metadata?.full_name ?? data.user.user_metadata?.name ?? email,
+          email,
+          loginMethod: "supabase",
+          role: email === ADMIN_EMAIL ? "admin" : "user",
+          createdAt: now,
+          updatedAt: now,
+          lastSignedIn: now,
+        };
+      }
+    }
+
     // 1. Prefer the session cookie (regular OAuth login).
     const cookies = this.parseCookies(req.headers.cookie);
     let sessionToken = cookies.get(COOKIE_NAME);

@@ -14,7 +14,7 @@ vi.mock("./db", () => dbMocks);
 
 function createContext(role: "admin" | "user" = "admin"): TrpcContext {
   return {
-    user: { id: 1, openId: "owner", name: "Lucas", email: "lucas@example.com", loginMethod: "manus", role, createdAt: new Date(), updatedAt: new Date(), lastSignedIn: new Date() },
+    user: { id: 1, openId: "owner", name: "Lucas", email: role === "admin" ? "resellr7@gmail.com" : "lucas@example.com", loginMethod: "manus", role, createdAt: new Date(), updatedAt: new Date(), lastSignedIn: new Date() },
     req: { protocol: "https", headers: {} } as TrpcContext["req"],
     res: {} as TrpcContext["res"],
   };
