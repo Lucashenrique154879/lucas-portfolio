@@ -62,19 +62,40 @@ export default function Home() {
       element.style.setProperty("--reveal-delay", `${Math.min(index % 4, 3) * 70}ms`);
     });
 
+    let scrollDirection: "down" | "up" = "down";
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      scrollDirection = currentScrollY >= lastScrollY ? "down" : "up";
+      lastScrollY = currentScrollY;
+      document.body.dataset.scrollDirection = scrollDirection;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const element = entry.target as HTMLElement;
         if (entry.isIntersecting) {
           element.classList.add("zoom-visible");
-        } else if (entry.boundingClientRect.top > 0) {
+          element.classList.remove("zoom-hidden-up", "zoom-hidden-down");
+        } else if (scrollDirection === "up" && entry.boundingClientRect.top > 0) {
           element.classList.remove("zoom-visible");
+          element.classList.add("zoom-hidden-up");
+        } else if (scrollDirection === "down" && entry.boundingClientRect.top < 0) {
+          element.classList.remove("zoom-visible");
+          element.classList.add("zoom-hidden-down");
         }
       });
     }, { threshold: 0.14, rootMargin: "-8% 0px -8% 0px" });
 
     elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+      delete document.body.dataset.scrollDirection;
+    };
   }, []);
 
   return (
