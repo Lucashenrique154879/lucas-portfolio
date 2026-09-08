@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, ArrowUpRight, Check, Code2, ExternalLink, LayoutPanelTop, MessageCircle, Smartphone, Workflow, X } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 const whatsapp = "https://wa.me/5533998542100";
 
@@ -14,6 +15,9 @@ type Project = {
   icon: typeof Code2;
   accent: "yellow" | "dark";
   benefits: string[];
+  challenge?: string | null;
+  solution?: string | null;
+  result?: string | null;
 };
 
 const projectList: Project[] = [
@@ -30,8 +34,18 @@ function ProjectImage({ project, compact = false }: { project: Project; compact?
   return <div className={`detail-image ${project.image ? "has-image" : "empty-project-image"} ${compact ? "compact-image" : ""}`}>{project.image ? <img src={project.image} alt={project.label} /> : <div className="image-placeholder"><Icon size={30} /><strong>Imagem do projeto</strong><span>Adicione seus prints ou fotos aqui</span></div>}<div className="detail-icon"><Icon size={22} /></div></div>;
 }
 
+function iconForProject(label: string) {
+  const normalized = label.toLowerCase();
+  if (normalized.includes("aplicativo") || normalized.includes("app")) return Smartphone;
+  if (normalized.includes("landing")) return LayoutPanelTop;
+  if (normalized.includes("sistema")) return Workflow;
+  return Code2;
+}
+
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const { data: persistedProjects } = trpc.projects.list.useQuery();
+  const projects = persistedProjects?.length ? persistedProjects.map((project) => ({ ...project, id: String(project.id), image: project.imageUrl ?? "", icon: iconForProject(project.label), benefits: project.benefits, accent: project.accent as "yellow" | "dark" })) : projectList;
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") setSelectedProject(null); };
@@ -45,17 +59,17 @@ export default function Projects() {
       <div className="projects-page-bg" aria-hidden="true" />
       <header className="projects-page-nav"><Link href="/" className="back-link"><ArrowLeft size={16} /> voltar ao portfólio</Link><span className="page-mark">LUCAS / PROJETOS</span><a href={whatsapp} target="_blank" rel="noreferrer" className="page-contact">Vamos conversar <ArrowUpRight size={14} /></a></header>
 
-      <section className="projects-page-hero"><div className="page-kicker">Portfólio / seleção de soluções</div><div className="projects-hero-grid"><h1>PROJETOS<br /><span>QUE GERAM</span><br />MOVIMENTO<b>.</b></h1><div className="projects-hero-copy"><p>Sites, landing pages, sistemas e aplicativos. Cada projeto tem seu espaço, sua história e seu próximo passo.</p><a href="#projetos-lista" className="page-scroll">explorar projetos <ArrowUpRight size={16} /></a></div></div><div className="project-count"><strong>{String(projectList.length).padStart(2, "0")}</strong><span>espaços<br />para projetos</span></div></section>
+      <section className="projects-page-hero"><div className="page-kicker">Portfólio / seleção de soluções</div><div className="projects-hero-grid"><h1>PROJETOS<br /><span>QUE GERAM</span><br />MOVIMENTO<b>.</b></h1><div className="projects-hero-copy"><p>Sites, landing pages, sistemas e aplicativos. Cada projeto tem seu espaço, sua história e seu próximo passo.</p><a href="#projetos-lista" className="page-scroll">explorar projetos <ArrowUpRight size={16} /></a></div></div><div className="project-count"><strong>{String(projects.length).padStart(2, "0")}</strong><span>{persistedProjects?.length ? "projetos" : "espaços"}<br />{persistedProjects?.length ? "publicados" : "para projetos"}</span></div></section>
 
       <section className="projects-list" id="projetos-lista">
-        {projectList.map((project) => { const Icon = project.icon; return <article className={`project-detail ${project.accent}`} id={project.id} key={project.id}><div className="detail-number">{project.number}</div><button className="detail-image-button" onClick={() => setSelectedProject(project)} aria-label={`Abrir detalhes de ${project.label}`}><ProjectImage project={project} /></button><div className="detail-copy"><span className="detail-label">{project.label}</span><h2>{project.title}</h2><p>{project.description}</p><div className="detail-sections"><div><strong>O desafio</strong><span>Conte aqui qual necessidade ou problema existia.</span></div><div><strong>A solução</strong><span>Explique o que você criou para resolver o desafio.</span></div><div><strong>O resultado</strong><span>Descreva o benefício ou a transformação gerada.</span></div></div><div className="benefit-list">{project.benefits.map((benefit) => <div key={benefit}><Check size={14} />{benefit}</div>)}</div><button className="detail-cta detail-open" onClick={() => setSelectedProject(project)}>Abrir detalhes <ArrowUpRight size={16} /></button></div></article>; })}
+        {projects.map((project) => { const Icon = project.icon; return <article className={`project-detail ${project.accent}`} id={project.id} key={project.id}><div className="detail-number">{project.number}</div><button className="detail-image-button" onClick={() => setSelectedProject(project)} aria-label={`Abrir detalhes de ${project.label}`}><ProjectImage project={project} /></button><div className="detail-copy"><span className="detail-label">{project.label}</span><h2>{project.title}</h2><p>{project.description}</p><div className="detail-sections"><div><strong>O desafio</strong><span>{project.challenge || "Conte aqui qual necessidade ou problema existia."}</span></div><div><strong>A solução</strong><span>{project.solution || "Explique o que você criou para resolver o desafio."}</span></div><div><strong>O resultado</strong><span>{project.result || "Descreva o benefício ou a transformação gerada."}</span></div></div><div className="benefit-list">{project.benefits.map((benefit) => <div key={benefit}><Check size={14} />{benefit}</div>)}</div><button className="detail-cta detail-open" onClick={() => setSelectedProject(project)}>Abrir detalhes <ArrowUpRight size={16} /></button></div></article>; })}
       </section>
 
       <section className="projects-page-process"><div className="page-kicker">Como acontece</div><div className="process-page-grid"><h2>UMA IDEIA.<br /><span>UM CAMINHO.</span></h2><div><p>Você chega com uma necessidade. Eu ajudo a transformar isso em uma solução clara, bonita e possível.</p><div className="process-mini-list"><span><b>01</b> conversa</span><span><b>02</b> planejamento</span><span><b>03</b> construção</span><span><b>04</b> entrega</span></div></div></div></section>
       <section className="projects-page-contact"><div className="contact-mark"><MessageCircle size={18} /> próximo projeto</div><h2>O PRÓXIMO<br /><span>PODE SER O SEU.</span></h2><p>Me conte o que você precisa e vamos descobrir juntos o melhor caminho.</p><a className="page-big-cta" href={whatsapp} target="_blank" rel="noreferrer">Começar uma conversa <ArrowUpRight size={19} /></a></section>
       <footer className="projects-page-footer"><Link href="/">Lucas /dev</Link><span>Sites, landing pages, sistemas e aplicativos feitos para pessoas reais.</span><a href="https://instagram.com/luccas.hgs" target="_blank" rel="noreferrer">Instagram <ExternalLink size={12} /></a></footer>
 
-      {selectedProject && <div className="project-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedProject(null); }}><section className={`project-modal ${selectedProject.accent}`} role="dialog" aria-modal="true" aria-labelledby="project-modal-title"><button className="modal-close" onClick={() => setSelectedProject(null)} aria-label="Fechar detalhes"><X size={20} /></button><div className="modal-number">{selectedProject.number} / detalhes do projeto</div><div className="modal-grid"><ProjectImage project={selectedProject} compact /><div className="modal-content"><span className="detail-label">{selectedProject.label}</span><h2 id="project-modal-title">{selectedProject.title}</h2><p>{selectedProject.description}</p><div className="modal-info"><div><strong>O desafio</strong><span>Adicione aqui o problema ou necessidade que deu origem ao projeto.</span></div><div><strong>A solução</strong><span>Explique como você pensou e desenvolveu esta solução.</span></div><div><strong>O resultado</strong><span>Descreva o impacto, benefício ou aprendizado do trabalho.</span></div></div><a className="detail-cta" href={`${whatsapp}?text=Olá%20Lucas!%20Quero%20conversar%20sobre%20${encodeURIComponent(selectedProject.label)}`} target="_blank" rel="noreferrer">Conversar sobre este projeto <ArrowUpRight size={16} /></a></div></div></section></div>}
+      {selectedProject && <div className="project-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedProject(null); }}><section className={`project-modal ${selectedProject.accent}`} role="dialog" aria-modal="true" aria-labelledby="project-modal-title"><button className="modal-close" onClick={() => setSelectedProject(null)} aria-label="Fechar detalhes"><X size={20} /></button><div className="modal-number">{selectedProject.number} / detalhes do projeto</div><div className="modal-grid"><ProjectImage project={selectedProject} compact /><div className="modal-content"><span className="detail-label">{selectedProject.label}</span><h2 id="project-modal-title">{selectedProject.title}</h2><p>{selectedProject.description}</p><div className="modal-info"><div><strong>O desafio</strong><span>{selectedProject.challenge || "Adicione aqui o problema ou necessidade que deu origem ao projeto."}</span></div><div><strong>A solução</strong><span>{selectedProject.solution || "Explique como você pensou e desenvolveu esta solução."}</span></div><div><strong>O resultado</strong><span>{selectedProject.result || "Descreva o impacto, benefício ou aprendizado do trabalho."}</span></div></div><a className="detail-cta" href={`${whatsapp}?text=Olá%20Lucas!%20Quero%20conversar%20sobre%20${encodeURIComponent(selectedProject.label)}`} target="_blank" rel="noreferrer">Conversar sobre este projeto <ArrowUpRight size={16} /></a></div></div></section></div>}
     </main>
   );
 }
