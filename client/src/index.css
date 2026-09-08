@@ -52,3 +52,23 @@ button, a { font: inherit; } button { border: 0; } a { color: inherit; text-deco
 .about-section.zoom-visible > *:nth-child(3), .contents-section.zoom-visible > *:nth-child(3), .projects-editorial.zoom-visible > *:nth-child(3), .process-editorial.zoom-visible > *:nth-child(3), .editorial-contact.zoom-visible > *:nth-child(3) { transition-delay: 270ms; }
 .trust-strip > div.zoom-reveal { transform: translateY(20px) scale(.94); clip-path: inset(0 20% 0 0); }.trust-strip > div.zoom-visible { transform: translateY(0) scale(1); clip-path: inset(0); }.content-card.zoom-reveal, .project-editorial-card.zoom-reveal { transform: translateY(38px) scale(.86) rotate(-2deg); clip-path: inset(8% 4% 10% 4% round 26px); }.content-card.zoom-visible, .project-editorial-card.zoom-visible { transform: translateY(0) scale(1) rotate(0); clip-path: inset(0 round 0); }
 @media (prefers-reduced-motion: reduce) { .zoom-reveal, .zoom-reveal.zoom-visible, .zoom-reveal.zoom-hidden-up, .zoom-reveal.zoom-hidden-down, .about-section.zoom-reveal > *, .contents-section.zoom-reveal > *, .projects-editorial.zoom-reveal > *, .process-editorial.zoom-reveal > *, .editorial-contact.zoom-reveal > *, .trust-strip > div.zoom-reveal, .trust-strip > div.zoom-visible, .content-card.zoom-reveal, .content-card.zoom-visible, .project-editorial-card.zoom-reveal, .project-editorial-card.zoom-visible { opacity: 1; transform: none; filter: none; clip-path: none; transition: none; } }
+
+:root { --scroll-color-progress: 0; }
+.portfolio-page { background: transparent; }
+.fixed-photo-background { position: fixed; z-index: 0; inset: 0; pointer-events: none; background-image: url('/manus-storage/Rostoumpoucomaisvis_vel_18019ad1.webp'); background-position: center center; background-size: cover; background-repeat: no-repeat; opacity: .22; filter: grayscale(calc(1 - var(--scroll-color-progress))) saturate(calc(.1 + var(--scroll-color-progress) * 1.5)) contrast(1.08); transform: scale(1.03); transition: filter .3s linear; }
+.fixed-photo-background::after { content: ''; position: absolute; inset: 0; background: rgba(230,230,227,.82); opacity: calc(1 - var(--scroll-color-progress) * .35); transition: opacity .3s linear; }
+.editorial-nav, .editorial-hero, .about-section, .contents-section, .projects-editorial, .process-editorial, .editorial-footer { background: rgba(230,230,227,.72); }
+.trust-strip { position: relative; z-index: 1; }.editorial-contact { background: rgba(37,38,38,.93); }
+@media (max-width: 600px) { .fixed-photo-background { background-position: center top; opacity: .19; } .editorial-nav, .editorial-hero, .about-section, .contents-section, .projects-editorial, .process-editorial, .editorial-footer { background: rgba(230,230,227,.78); } }
+@media (prefers-reduced-motion: reduce) { .fixed-photo-background { transition: none; } }
+
+/* The portrait stays fixed behind the complete page, visible as a living visual texture. */
+.fixed-photo-background { opacity: .38; }
+.fixed-photo-background::after { background: rgba(230,230,227,.48); }
+.editorial-nav, .editorial-hero, .about-section, .contents-section, .projects-editorial, .process-editorial, .editorial-footer { background: rgba(230,230,227,.62); }
+@media (max-width: 600px) { .fixed-photo-background { opacity: .32; } .fixed-photo-background::after { background: rgba(230,230,227,.56); } .editorial-nav, .editorial-hero, .about-section, .contents-section, .projects-editorial, .process-editorial, .editorial-footer { background: rgba(230,230,227,.7); } }
+
+.fixed-photo-background { opacity: .62; }
+.fixed-photo-background::after { background: rgba(230,230,227,.34); }
+.editorial-nav, .editorial-hero, .about-section, .contents-section, .projects-editorial, .process-editorial, .editorial-footer { background: rgba(230,230,227,.5); }
+@media (max-width: 600px) { .fixed-photo-background { opacity: .55; } .fixed-photo-background::after { background: rgba(230,230,227,.42); } .editorial-nav, .editorial-hero, .about-section, .contents-section, .projects-editorial, .process-editorial, .editorial-footer { background: rgba(230,230,227,.58); } }

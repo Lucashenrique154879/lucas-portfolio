@@ -64,12 +64,20 @@ export default function Home() {
 
     let scrollDirection: "down" | "up" = "down";
     let lastScrollY = window.scrollY;
+    let frame = 0;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       scrollDirection = currentScrollY >= lastScrollY ? "down" : "up";
       lastScrollY = currentScrollY;
       document.body.dataset.scrollDirection = scrollDirection;
+
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollableHeight > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollableHeight)) : 0;
+        document.documentElement.style.setProperty("--scroll-color-progress", progress.toFixed(3));
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -94,12 +102,15 @@ export default function Home() {
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(frame);
+      document.documentElement.style.removeProperty("--scroll-color-progress");
       delete document.body.dataset.scrollDirection;
     };
   }, []);
 
   return (
     <main className="portfolio-page">
+      <div className="fixed-photo-background" aria-hidden="true" />
       <div className="paper-mark mark-top">L<span>•</span></div>
       <div className="paper-mark mark-bottom">2026</div>
 
