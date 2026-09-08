@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -51,6 +51,31 @@ const projects = [
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const goTo = (id: string) => { setMenuOpen(false); scrollToSection(id); };
+
+  useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>(
+      ".about-section, .contents-section, .projects-editorial, .process-editorial, .editorial-contact, .trust-strip > div, .content-card, .project-editorial-card, .process-steps > div"
+    ));
+
+    elements.forEach((element, index) => {
+      element.classList.add("zoom-reveal");
+      element.style.setProperty("--reveal-delay", `${Math.min(index % 4, 3) * 70}ms`);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const element = entry.target as HTMLElement;
+        if (entry.isIntersecting) {
+          element.classList.add("zoom-visible");
+        } else if (entry.boundingClientRect.top > 0) {
+          element.classList.remove("zoom-visible");
+        }
+      });
+    }, { threshold: 0.14, rootMargin: "-8% 0px -8% 0px" });
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <main className="portfolio-page">
