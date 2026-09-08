@@ -2,15 +2,18 @@ import { useState } from "react";
 import {
   ArrowDownRight,
   ArrowUpRight,
+  Blocks,
+  Camera,
   Check,
-  ChevronDown,
   Code2,
   ExternalLink,
-  Instagram,
   LayoutPanelTop,
   Menu,
   MessageCircle,
   MonitorSmartphone,
+  Palette,
+  PenTool,
+  Smartphone,
   Sparkles,
   Workflow,
   X,
@@ -28,144 +31,93 @@ const assets = {
 
 const whatsapp = "https://wa.me/5533998542100";
 
-const projects = [
-  {
-    number: "01",
-    title: "Presença digital",
-    category: "Sites profissionais",
-    description: "Interfaces responsivas que apresentam sua marca com clareza e transformam visitas em conversas.",
-    image: assets.sites,
-    tone: "blue",
-  },
-  {
-    number: "02",
-    title: "Operação organizada",
-    category: "Sistemas sob medida",
-    description: "Ferramentas pensadas para reduzir tarefas manuais e deixar a rotina do negócio mais leve.",
-    image: assets.systems,
-    tone: "green",
-  },
-  {
-    number: "03",
-    title: "Ideias em movimento",
-    category: "Aplicativos personalizados",
-    description: "Experiências mobile que aproximam serviços, clientes e oportunidades em um só lugar.",
-    image: assets.apps,
-    tone: "gold",
-  },
-];
-
-const steps = [
-  {
-    icon: MessageCircle,
-    index: "01",
-    title: "Eu escuto",
-    text: "Entendo o momento do negócio, o público e o problema que precisa ser resolvido.",
-  },
-  {
-    icon: Workflow,
-    index: "02",
-    title: "Eu organizo",
-    text: "Transformo a ideia em um plano claro, com prioridades, estrutura e próximos passos.",
-  },
-  {
-    icon: Code2,
-    index: "03",
-    title: "Eu construo",
-    text: "Desenvolvo a solução com atenção à experiência, aos detalhes e ao uso no dia a dia.",
-  },
-  {
-    icon: Check,
-    index: "04",
-    title: "Eu entrego",
-    text: "Testo, ajusto e acompanho a entrega para que tudo funcione de verdade.",
-  },
-];
-
 function scrollToSection(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
 
+const contents = [
+  { icon: Palette, label: "Sites", text: "presença digital" },
+  { icon: Workflow, label: "Sistemas", text: "rotina organizada" },
+  { icon: Smartphone, label: "Aplicativos", text: "ideias em movimento" },
+  { icon: Code2, label: "Processo", text: "do rascunho à entrega" },
+];
+
+const projects = [
+  { title: "Sites que conectam", tag: "01 / presença digital", image: assets.sites, copy: "Interfaces que apresentam sua marca com clareza e transformam visitas em conversas." },
+  { title: "Sistemas sob medida", tag: "02 / operação organizada", image: assets.systems, copy: "Ferramentas pensadas para reduzir tarefas manuais e deixar a rotina mais leve." },
+  { title: "Aplicativos reais", tag: "03 / ideias em movimento", image: assets.apps, copy: "Experiências mobile construídas para aproximar pessoas, serviços e oportunidades." },
+];
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const goTo = (id: string) => {
-    setMenuOpen(false);
-    scrollToSection(id);
-  };
+  const goTo = (id: string) => { setMenuOpen(false); scrollToSection(id); };
 
   return (
-    <main className="site-shell">
-      <div className="ambient ambient-one" />
-      <div className="ambient ambient-two" />
+    <main className="portfolio-page">
+      <div className="paper-mark mark-top">L<span>•</span></div>
+      <div className="paper-mark mark-bottom">2026</div>
 
-      <header className={`topbar ${menuOpen ? "topbar-open" : ""}`}>
-        <a className="brand" href="#inicio" onClick={() => setMenuOpen(false)} aria-label="Lucas, voltar ao início">
-          <span className="brand-mark">L<span>.</span></span>
-          <span className="brand-word">lucas<span>/dev</span></span>
-        </a>
-
-        <nav className={`desktop-nav ${menuOpen ? "mobile-nav-visible" : ""}`} aria-label="Navegação principal">
+      <header className="editorial-nav">
+        <a className="editorial-logo" href="#inicio">LU<span>CAS</span><small>/DEV</small></a>
+        <div className="nav-rule" />
+        <nav className={menuOpen ? "nav-open" : ""}>
+          <button onClick={() => goTo("sobre")}>Sobre</button>
+          <button onClick={() => goTo("conteudo")}>Conteúdo</button>
           <button onClick={() => goTo("projetos")}>Projetos</button>
-          <button onClick={() => goTo("processo")}>Processo</button>
-          <button onClick={() => goTo("sobre")}>Sobre mim</button>
           <button onClick={() => goTo("contato")}>Contato</button>
         </nav>
-
-        <a className="nav-cta" href={whatsapp} target="_blank" rel="noreferrer">
-          Vamos conversar <ArrowUpRight size={15} />
-        </a>
-        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menu">
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <a className="mini-contact" href={whatsapp} target="_blank" rel="noreferrer">Vamos conversar <ArrowUpRight size={14} /></a>
+        <button className="mobile-menu" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menu">{menuOpen ? <X size={20} /> : <Menu size={20} />}</button>
       </header>
 
-      <section className="hero section-pad" id="inicio">
-        <div className="hero-copy reveal-up">
-          <div className="eyebrow"><span className="eyebrow-dot" /> Web &amp; App Developer <span className="eyebrow-line" /> Lucas</div>
-          <h1>Ideias claras.<br /><em>Soluções</em> que<br />movem negócios.</h1>
-          <p className="hero-text">Eu transformo necessidades reais em sites, sistemas e aplicativos que fazem sentido para pessoas e negócios.</p>
-          <div className="hero-actions">
-            <a className="button button-primary" href={whatsapp} target="_blank" rel="noreferrer">Começar um projeto <ArrowUpRight size={17} /></a>
-            <button className="button button-quiet" onClick={() => scrollToSection("projetos")}>Ver projetos <ArrowDownRight size={17} /></button>
+      <section className="editorial-hero" id="inicio">
+        <div className="hero-topline"><span>Portfólio pessoal</span><span>Web / App / Design</span><span className="year-vertical">Lucas Henrique Gomes de Souza</span></div>
+        <div className="hero-layout">
+          <div className="hero-title-block">
+            <div className="sticker">Web &amp; App<br />Developer</div>
+            <h1>IDEIAS<br /><span>CLARAS</span><b>.</b></h1>
+            <div className="hero-under-title"><span>sites, sistemas<br />e aplicativos</span><ArrowDownRight size={28} /></div>
           </div>
-          <div className="hero-proof"><span className="proof-avatars"><span>LH</span><span>+</span></span><span>Projetos pensados<br />para a vida real.</span></div>
+          <div className="hero-person-wrap">
+            <div className="yellow-block hero-yellow" />
+            <div className="portrait-circle"><img src={assets.portrait} alt="Lucas, desenvolvedor web" /></div>
+            <div className="hero-caption">Soluções digitais<br />pensadas para pessoas reais.</div>
+            <div className="hero-outline" />
+          </div>
         </div>
-
-        <div className="hero-visual reveal-up delay-one">
-          <div className="hero-orbit orbit-one" /><div className="hero-orbit orbit-two" />
-          <div className="portrait-frame"><img src={assets.portrait} alt="Lucas, desenvolvedor web e de aplicativos" /></div>
-          <div className="floating-card card-status"><span className="status-pulse" /> disponível para novos projetos <ArrowUpRight size={13} /></div>
-          <div className="floating-card card-code"><span className="code-symbol">&lt;/&gt;</span><span><b>criando</b><br />com propósito</span></div>
-          <div className="hero-number">01<span>/04</span></div>
-        </div>
-        <button className="scroll-cue" onClick={() => scrollToSection("projetos")} aria-label="Rolar para projetos"><span>scroll para explorar</span><ChevronDown size={18} /></button>
+        <div className="hero-bottom"><a className="scroll-pill" href="#sobre"><span>↓</span> conhecer o trabalho</a><span className="signature">L.</span></div>
       </section>
 
-      <section className="intro-strip section-pad" id="sobre">
-        <div className="section-kicker">01 / sobre o trabalho</div>
-        <div className="intro-grid">
-          <h2>Mais do que<br /><span>código.</span></h2>
-          <div className="intro-body"><p>Eu acredito que tecnologia boa é aquela que simplifica. Por isso, cada projeto começa com uma conversa e termina com uma solução que você consegue usar, entender e sentir como sua.</p><p className="muted-copy">Do primeiro rascunho ao último teste, você acompanha o processo de perto. Sem complicação. Sem promessas vazias.</p><a className="text-link" href={whatsapp} target="_blank" rel="noreferrer">Conhecer meu jeito de trabalhar <ArrowUpRight size={16} /></a></div>
+      <section className="about-section" id="sobre">
+        <div className="section-line-label"><span>Sobre</span><div /><span>01</span></div>
+        <div className="about-layout">
+          <div className="about-portrait"><div className="yellow-block" /><img src={assets.portrait} alt="Retrato de Lucas" /><div className="portrait-label">Lucas / Desenvolvedor</div></div>
+          <div className="about-copy"><div className="hello-mark">“</div><h2>Olá<span>.</span></h2><p className="lead">Eu sou o Lucas, desenvolvedor web e de aplicativos. Transformo ideias em soluções digitais que ajudam negócios a crescer e pessoas a trabalhar melhor.</p><p>Gosto de entender o problema antes de abrir o editor. Cada projeto é uma conversa, uma descoberta e uma construção feita com intenção.</p><a className="yellow-link" href={whatsapp} target="_blank" rel="noreferrer">Vamos trabalhar juntos <ArrowUpRight size={16} /></a></div>
+          <div className="about-details"><div><h3>Foco</h3><p>Experiências simples<br />e funcionais.</p></div><div><h3>Atuação</h3><p>Sites, sistemas<br />e aplicativos.</p></div><div><h3>Base</h3><p>Minas Gerais<br />&amp; projetos remotos.</p></div></div>
         </div>
       </section>
 
-      <section className="projects-section section-pad" id="projetos">
-        <div className="section-heading"><div><div className="section-kicker">02 / trabalhos selecionados</div><h2>O que eu <span>construo.</span></h2></div><p>Algumas das formas de transformar uma ideia em presença digital, organização e novas possibilidades.</p></div>
-        <div className="projects-grid">{projects.map((project) => <article className={`project-card ${project.tone}`} key={project.number}><div className="project-image-wrap"><img src={project.image} alt={project.category} /><div className="project-index">{project.number}</div><a href={whatsapp} target="_blank" rel="noreferrer" className="project-link" aria-label={`Conversar sobre ${project.category}`}><ArrowUpRight size={19} /></a></div><div className="project-meta"><div><span className="project-category">{project.category}</span><h3>{project.title}</h3></div><p>{project.description}</p></div></article>)}</div>
+      <section className="contents-section" id="conteudo">
+        <div className="section-line-label"><span>Índice</span><div /><span>02</span></div>
+        <div className="contents-heading"><span className="quote-dot">“</span><h2>O QUE EU<br /><span>CONSTRUO</span><b>.</b></h2><p>Um pouco do que existe por trás de cada entrega.</p></div>
+        <div className="content-cards">{contents.map((item, index) => { const Icon = item.icon; return <button className="content-card" key={item.label} onClick={() => index === 3 ? goTo("processo") : goTo("projetos")}><div className="card-icon"><Icon size={37} strokeWidth={1.65} /></div><strong>{item.label}</strong><span>{item.text}</span><ArrowUpRight className="card-arrow" size={18} /></button>; })}</div>
       </section>
 
-      <section className="process-section section-pad" id="processo">
-        <div className="process-header"><div className="section-kicker">03 / por trás da tela</div><h2>Meu trabalho<br /><span>é humano.</span></h2><p>O processo importa tanto quanto o resultado. É assim que uma boa ideia deixa de ser só uma ideia.</p></div>
-        <div className="steps-grid">{steps.map((step) => { const Icon = step.icon; return <div className="step" key={step.index}><div className="step-top"><span>{step.index}</span><Icon size={20} strokeWidth={1.5} /></div><h3>{step.title}</h3><p>{step.text}</p></div>; })}</div>
-        <div className="routine-gallery"><div className="routine-intro"><Sparkles size={20} /><span>um pouco da rotina</span><p>Entre uma reunião, um café e alguns testes, é aqui que as soluções ganham vida.</p></div><div className="routine-image routine-tall"><img src={assets.development} alt="Lucas trabalhando no desenvolvimento de um projeto" /></div><div className="routine-image"><img src={assets.planning} alt="Planejamento de um projeto com cliente" /></div><div className="routine-image"><img src={assets.delivery} alt="Testes de um site em diferentes dispositivos" /></div></div>
+      <section className="projects-editorial" id="projetos">
+        <div className="section-line-label"><span>Projetos</span><div /><span>03</span></div>
+        <div className="projects-editorial-title"><span className="mini-label">trabalhos selecionados</span><h2>FEITO<br /><span>COM INTENÇÃO</span><b>.</b></h2><p>Do primeiro rascunho ao último teste, cada detalhe tem um motivo.</p></div>
+        <div className="project-editorial-grid">{projects.map((project) => <article className="project-editorial-card" key={project.title}><div className="project-art"><img src={project.image} alt={project.title} /><span>{project.tag}</span><a href={whatsapp} target="_blank" rel="noreferrer"><ArrowUpRight size={20} /></a></div><h3>{project.title}</h3><p>{project.copy}</p></article>)}</div>
       </section>
 
-      <section className="services-section section-pad"><div className="services-heading"><div className="section-kicker">04 / como posso ajudar</div><h2>Seu próximo<br /><span>passo digital.</span></h2></div><div className="service-list"><div className="service-row"><span>01</span><div><h3>Sites profissionais</h3><p>Uma presença digital que apresenta seu negócio e abre portas.</p></div><LayoutPanelTop size={23} /></div><div className="service-row"><span>02</span><div><h3>Sistemas personalizados</h3><p>Processos mais organizados, pensados para a sua operação.</p></div><Workflow size={23} /></div><div className="service-row"><span>03</span><div><h3>Aplicativos sob medida</h3><p>Experiências móveis construídas para aproximar pessoas e serviços.</p></div><MonitorSmartphone size={23} /></div></div></section>
+      <section className="process-editorial" id="processo">
+        <div className="section-line-label"><span>Processo</span><div /><span>04</span></div>
+        <div className="process-editorial-grid"><div><span className="mini-label">por trás da tela</span><h2>DO CAFÉ<br />AO <span>CÓDIGO</span><b>.</b></h2><p>Uma rotina real, feita de escuta, planejamento, criação e testes.</p></div><div className="process-images"><img src={assets.development} alt="Lucas desenvolvendo um projeto" /><img src={assets.planning} alt="Lucas planejando um projeto" /><img src={assets.delivery} alt="Lucas testando um projeto" /></div></div>
+        <div className="process-steps"><div><b>01</b><h3>Entender</h3><p>O problema vem antes da solução.</p></div><div><b>02</b><h3>Organizar</h3><p>Ideias claras para decisões melhores.</p></div><div><b>03</b><h3>Construir</h3><p>Design e tecnologia lado a lado.</p></div><div><b>04</b><h3>Entregar</h3><p>Testar também faz parte.</p></div></div>
+      </section>
 
-      <section className="contact-section section-pad" id="contato"><div className="contact-grid"><div><div className="section-kicker">05 / vamos conversar</div><h2>Tem uma ideia<br />na cabeça?</h2><p>Me conta. A gente organiza juntos o primeiro passo para tirar ela do papel.</p></div><div className="contact-action"><a className="contact-button" href={whatsapp} target="_blank" rel="noreferrer"><span>Falar comigo pelo WhatsApp</span><ArrowUpRight size={25} /></a><span className="contact-note">Resposta direta, sem formulários complicados.</span></div></div></section>
+      <section className="editorial-contact" id="contato"><div className="contact-stamp"><Sparkles size={19} /> aberto para projetos</div><h2>VAMOS<br /><span>CRIAR?</span></h2><p>Se você tem uma ideia, uma necessidade ou apenas uma pergunta, me chama. A próxima página pode começar aqui.</p><a className="big-yellow-button" href={whatsapp} target="_blank" rel="noreferrer">Falar pelo WhatsApp <ArrowUpRight size={20} /></a></section>
 
-      <footer className="footer section-pad"><a className="brand" href="#inicio"><span className="brand-mark">L<span>.</span></span><span className="brand-word">lucas<span>/dev</span></span></a><div className="footer-center">Sites, sistemas e aplicativos<br /><span>feitos para pessoas reais.</span></div><div className="footer-right"><a href="https://instagram.com/luccas.hgs" target="_blank" rel="noreferrer"><Instagram size={17} /> Instagram</a><a href={whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={17} /> WhatsApp</a></div><div className="footer-bottom"><span>© 2026 Lucas. Todos os direitos reservados.</span><span>Construído com intenção.</span></div></footer>
+      <footer className="editorial-footer"><div className="footer-logo">L<span>UCAS</span><small>/DEV</small></div><div className="footer-links"><a href="https://instagram.com/luccas.hgs" target="_blank" rel="noreferrer"><MessageCircle size={15} /> Instagram</a><a href={whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={15} /> WhatsApp</a></div><div className="footer-copy">© 2026 Lucas<br />feito com intenção.</div></footer>
     </main>
   );
 }
