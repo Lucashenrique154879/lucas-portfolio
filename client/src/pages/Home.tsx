@@ -169,7 +169,7 @@ export default function Home() {
 
       <section className="projects-editorial" id="projetos">
         <div className="section-line-label"><span>Projetos</span><div /><span>03</span></div>
-        <div className="projects-editorial-title"><span className="mini-label">soluções para negócios</span><h2>FEITO<br /><span>PARA FUNCIONAR</span><b>.</b></h2><p>Projetos que unem boa apresentação, experiência simples e uma finalidade clara: ajudar você a avançar.</p></div>
+        <div className="projects-editorial-title"><span className="mini-label">soluções para negócios</span><h2>FEITO<br /><span>PARA FUNCIONAR</span><b>.</b></h2><div><p>Projetos que unem boa apresentação, experiência simples e uma finalidade clara: ajudar você a avançar.</p><a className="yellow-link" href="/projetos">Ver página completa <ArrowUpRight size={16} /></a></div></div>
         <div className="project-editorial-grid">{projects.map((project) => <article className="project-editorial-card" key={project.title}><div className="project-art"><img src={project.image} alt={project.title} /><span>{project.tag}</span><a href={whatsapp} target="_blank" rel="noreferrer"><ArrowUpRight size={20} /></a></div><h3>{project.title}</h3><p>{project.copy}</p></article>)}</div>
       </section>
 
