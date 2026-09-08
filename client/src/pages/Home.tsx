@@ -77,6 +77,7 @@ export default function Home() {
             <div className="sticker">Web &amp; App<br />Developer</div>
             <h1>IDEIAS<br /><span>CLARAS</span><b>.</b></h1>
             <div className="hero-under-title"><span>sites, sistemas<br />e aplicativos</span><ArrowDownRight size={28} /></div>
+            <p className="hero-promise">Tecnologia bonita, simples e pensada para fazer seu negócio avançar.</p>
           </div>
           <div className="hero-person-wrap">
             <div className="yellow-block hero-yellow" />
@@ -88,11 +89,17 @@ export default function Home() {
         <div className="hero-bottom"><a className="scroll-pill" href="#sobre"><span>↓</span> conhecer o trabalho</a><span className="signature">L.</span></div>
       </section>
 
+      <section className="trust-strip" aria-label="Benefícios de trabalhar com Lucas">
+        <div><span>01</span><strong>Clareza no processo</strong><p>Você sabe o que está sendo criado e por quê.</p></div>
+        <div><span>02</span><strong>Solução sob medida</strong><p>Nada de modelos prontos que não combinam com sua rotina.</p></div>
+        <div><span>03</span><strong>Foco no resultado</strong><p>O projeto precisa ser bonito, útil e ajudar seu negócio.</p></div>
+      </section>
+
       <section className="about-section" id="sobre">
         <div className="section-line-label"><span>Sobre</span><div /><span>01</span></div>
         <div className="about-layout">
           <div className="about-portrait"><div className="yellow-block" /><img src={assets.portrait} alt="Retrato de Lucas" /><div className="portrait-label">Lucas / Desenvolvedor</div></div>
-          <div className="about-copy"><div className="hello-mark">“</div><h2>Olá<span>.</span></h2><p className="lead">Eu sou o Lucas, desenvolvedor web e de aplicativos. Transformo ideias em soluções digitais que ajudam negócios a crescer e pessoas a trabalhar melhor.</p><p>Gosto de entender o problema antes de abrir o editor. Cada projeto é uma conversa, uma descoberta e uma construção feita com intenção.</p><a className="yellow-link" href={whatsapp} target="_blank" rel="noreferrer">Vamos trabalhar juntos <ArrowUpRight size={16} /></a></div>
+          <div className="about-copy"><div className="hello-mark">“</div><h2>Olá<span>.</span></h2><p className="lead">Eu sou o Lucas. Ajudo empresas e empreendedores a transformar ideias em sites, sistemas e aplicativos que geram mais confiança, organização e oportunidades.</p><p>Você não precisa entender de tecnologia para tirar um projeto do papel. Eu traduzo sua necessidade, organizo o caminho e construo uma solução que faça sentido para o seu negócio.</p><a className="yellow-link" href={whatsapp} target="_blank" rel="noreferrer">Vamos trabalhar juntos <ArrowUpRight size={16} /></a></div>
           <div className="about-details"><div><h3>Foco</h3><p>Experiências simples<br />e funcionais.</p></div><div><h3>Atuação</h3><p>Sites, sistemas<br />e aplicativos.</p></div><div><h3>Base</h3><p>Minas Gerais<br />&amp; projetos remotos.</p></div></div>
         </div>
       </section>
@@ -105,7 +112,7 @@ export default function Home() {
 
       <section className="projects-editorial" id="projetos">
         <div className="section-line-label"><span>Projetos</span><div /><span>03</span></div>
-        <div className="projects-editorial-title"><span className="mini-label">trabalhos selecionados</span><h2>FEITO<br /><span>COM INTENÇÃO</span><b>.</b></h2><p>Do primeiro rascunho ao último teste, cada detalhe tem um motivo.</p></div>
+        <div className="projects-editorial-title"><span className="mini-label">soluções para negócios</span><h2>FEITO<br /><span>PARA FUNCIONAR</span><b>.</b></h2><p>Projetos que unem boa apresentação, experiência simples e uma finalidade clara: ajudar você a avançar.</p></div>
         <div className="project-editorial-grid">{projects.map((project) => <article className="project-editorial-card" key={project.title}><div className="project-art"><img src={project.image} alt={project.title} /><span>{project.tag}</span><a href={whatsapp} target="_blank" rel="noreferrer"><ArrowUpRight size={20} /></a></div><h3>{project.title}</h3><p>{project.copy}</p></article>)}</div>
       </section>
 
