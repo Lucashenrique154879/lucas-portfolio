@@ -12,35 +12,35 @@ const projectList = [
   {
     id: "sites",
     number: "01",
-    label: "Sites profissionais",
-    title: "Sua marca merece ser encontrada.",
-    description: "Sites responsivos, claros e pensados para transformar presença digital em confiança. A primeira impressão do seu negócio começa na tela.",
-    image: assets.sites,
+    label: "Projeto de site",
+    title: "Nome do projeto aqui.",
+    description: "Adicione aqui um resumo curto do projeto: para quem foi feito, qual era o objetivo e qual solução você criou.",
+    image: "",
     icon: Code2,
     accent: "yellow",
-    benefits: ["Visual profissional e autoral", "Experiência perfeita no celular", "Estrutura pensada para gerar contato"],
+    benefits: ["Desafio do projeto", "Solução desenvolvida", "Resultado para o cliente"],
   },
   {
     id: "sistemas",
     number: "02",
-    label: "Sistemas personalizados",
-    title: "Menos confusão. Mais controle.",
-    description: "Sistemas feitos para a rotina real da sua empresa: organizam informações, reduzem tarefas repetitivas e ajudam você a tomar decisões melhores.",
-    image: assets.systems,
+    label: "Projeto de sistema",
+    title: "Nome do projeto aqui.",
+    description: "Adicione aqui o contexto do sistema: qual problema existia, o que foi construído e como a solução melhorou a rotina.",
+    image: "",
     icon: Workflow,
     accent: "dark",
-    benefits: ["Processos mais organizados", "Funcionalidades para a sua operação", "Informações em um só lugar"],
+    benefits: ["Problema que precisava resolver", "Funcionalidades principais", "Benefício gerado"],
   },
   {
     id: "aplicativos",
     number: "03",
-    label: "Aplicativos sob medida",
-    title: "Uma ideia pode virar experiência.",
-    description: "Aplicativos construídos para aproximar pessoas, serviços e oportunidades de um jeito simples, útil e fácil de usar.",
-    image: assets.apps,
+    label: "Projeto de aplicativo",
+    title: "Nome do projeto aqui.",
+    description: "Adicione aqui a história do aplicativo: a ideia inicial, o público e a experiência que você criou para os usuários.",
+    image: "",
     icon: Smartphone,
     accent: "yellow",
-    benefits: ["Fluxos simples para o usuário", "Interface pensada para mobile", "Produto digital com identidade"],
+    benefits: ["Público do aplicativo", "Recursos mais importantes", "Impacto da solução"],
   },
 ];
 
@@ -67,8 +67,8 @@ export default function Projects() {
         {projectList.map((project, index) => { const Icon = project.icon; return (
           <article className={`project-detail ${project.accent}`} id={project.id} key={project.id}>
             <div className="detail-number">{project.number}</div>
-            <div className="detail-image"><img src={project.image} alt={project.label} /><div className="detail-icon"><Icon size={22} /></div></div>
-            <div className="detail-copy"><span className="detail-label">{project.label}</span><h2>{project.title}</h2><p>{project.description}</p><div className="benefit-list">{project.benefits.map((benefit) => <div key={benefit}><Check size={14} />{benefit}</div>)}</div><a className="detail-cta" href={`${whatsapp}?text=Olá%20Lucas!%20Quero%20conversar%20sobre%20${encodeURIComponent(project.label)}`} target="_blank" rel="noreferrer">Falar sobre este projeto <ArrowUpRight size={16} /></a></div>
+            <div className={`detail-image ${project.image ? "has-image" : "empty-project-image"}`}>{project.image ? <img src={project.image} alt={project.label} /> : <div className="image-placeholder"><Icon size={30} /><strong>Imagem do projeto</strong><span>Adicione seus prints ou fotos aqui</span></div>}<div className="detail-icon"><Icon size={22} /></div></div>
+            <div className="detail-copy"><span className="detail-label">{project.label}</span><h2>{project.title}</h2><p>{project.description}</p><div className="detail-sections"><div><strong>O desafio</strong><span>Conte aqui qual necessidade ou problema existia.</span></div><div><strong>A solução</strong><span>Explique o que você criou para resolver o desafio.</span></div><div><strong>O resultado</strong><span>Descreva o benefício ou a transformação gerada.</span></div></div><div className="benefit-list">{project.benefits.map((benefit) => <div key={benefit}><Check size={14} />{benefit}</div>)}</div><a className="detail-cta" href={`${whatsapp}?text=Olá%20Lucas!%20Quero%20conversar%20sobre%20${encodeURIComponent(project.label)}`} target="_blank" rel="noreferrer">Falar sobre este projeto <ArrowUpRight size={16} /></a></div>
           </article>
         ); })}
       </section>
