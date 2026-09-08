@@ -181,7 +181,7 @@ export default function Home() {
 
       <section className="editorial-contact" id="contato"><div className="contact-stamp"><Sparkles size={19} /> aberto para projetos</div><h2>VAMOS<br /><span>CRIAR?</span></h2><p>Se você tem uma ideia, uma necessidade ou apenas uma pergunta, me chama. A próxima página pode começar aqui.</p><a className="big-yellow-button" href={whatsapp} target="_blank" rel="noreferrer">Falar pelo WhatsApp <ArrowUpRight size={20} /></a></section>
 
-      <footer className="editorial-footer"><div className="footer-logo">L<span>UCAS</span><small>/DEV</small></div><div className="footer-links"><a href="https://instagram.com/luccas.hgs" target="_blank" rel="noreferrer"><MessageCircle size={15} /> Instagram</a><a href={whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={15} /> WhatsApp</a></div><div className="footer-copy">© 2026 Lucas<br />feito com intenção.</div></footer>
+      <footer className="editorial-footer"><div className="footer-logo">L<span>UCAS</span><small>/DEV</small></div><div className="footer-links"><a href="https://instagram.com/luccas.hgs" target="_blank" rel="noreferrer"><MessageCircle size={15} /> Instagram</a><a href={whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={15} /> WhatsApp</a><a className="admin-footer-link" href="/admin/projetos">Área administrativa</a></div><div className="footer-copy">© 2026 Lucas<br />feito com intenção.</div></footer>
     </main>
   );
 }
