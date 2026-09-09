@@ -55,7 +55,7 @@ button, a { font: inherit; } button { border: 0; } a { color: inherit; text-deco
 
 :root { --scroll-color-progress: 0; }
 .portfolio-page { background: transparent; }
-.fixed-photo-background { position: fixed; z-index: 0; inset: 0; pointer-events: none; background-image: url('/manus-storage/Rostoumpoucomaisvis_vel_18019ad1.webp'); background-position: center center; background-size: cover; background-repeat: no-repeat; opacity: .22; filter: grayscale(calc(1 - var(--scroll-color-progress))) saturate(calc(.1 + var(--scroll-color-progress) * 1.5)) contrast(1.08); transform: scale(1.03); transition: filter .3s linear; }
+.fixed-photo-background { position: fixed; z-index: 0; inset: 0; pointer-events: none; background-image: url('https://tkbekfarnsfvfgndlxfb.supabase.co/storage/v1/object/public/portfolio-images/portfolio/portrait.webp'); background-position: center center; background-size: cover; background-repeat: no-repeat; opacity: .22; filter: grayscale(calc(1 - var(--scroll-color-progress))) saturate(calc(.1 + var(--scroll-color-progress) * 1.5)) contrast(1.08); transform: scale(1.03); transition: filter .3s linear; }
 .fixed-photo-background::after { content: ''; position: absolute; inset: 0; background: rgba(230,230,227,.82); opacity: calc(1 - var(--scroll-color-progress) * .35); transition: opacity .3s linear; }
 .editorial-nav, .editorial-hero, .about-section, .contents-section, .projects-editorial, .process-editorial, .editorial-footer { background: rgba(230,230,227,.72); }
 .trust-strip { position: relative; z-index: 1; }.editorial-contact { background: rgba(37,38,38,.93); }

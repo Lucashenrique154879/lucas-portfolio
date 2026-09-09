@@ -19,14 +19,15 @@ import {
   X,
 } from "lucide-react";
 
+const storageBase = "https://tkbekfarnsfvfgndlxfb.supabase.co/storage/v1/object/public/portfolio-images/portfolio";
 const assets = {
-  portrait: "/manus-storage/Rostoumpoucomaisvis_vel_18019ad1.webp",
-  sites: "/manus-storage/instagram_post_01_sites_6a74c4c2.png",
-  systems: "/manus-storage/instagram_post_02_sistemas_4b42bf39.png",
-  apps: "/manus-storage/instagram_post_03_aplicativos_6e251183.png",
-  development: "/manus-storage/instagram_rotina_01_desenvolvimento_51809ba1.png",
-  planning: "/manus-storage/instagram_rotina_02_planejamento_a0616b7a.png",
-  delivery: "/manus-storage/instagram_rotina_03_entrega_fa585bc4.png",
+  portrait: `${storageBase}/portrait.webp`,
+  sites: `${storageBase}/instagram_post_01_sites.png`,
+  systems: `${storageBase}/instagram_post_02_sistemas.png`,
+  apps: `${storageBase}/instagram_post_03_aplicativos.png`,
+  development: `${storageBase}/instagram_rotina_01_desenvolvimento.png`,
+  planning: `${storageBase}/instagram_rotina_02_planejamento.png`,
+  delivery: `${storageBase}/instagram_rotina_03_entrega.png`,
 };
 
 const whatsapp = "https://wa.me/5533998542100";
