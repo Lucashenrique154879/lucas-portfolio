@@ -120,3 +120,30 @@ button, a { font: inherit; } button { border: 0; } a { color: inherit; text-deco
 .admin-login-form input { width: 100%; padding: 12px 13px; color: #252626; background: rgba(255,255,255,.72); border: 1px solid rgba(37,38,38,.35); outline: none; font: 13px 'Manrope', sans-serif; }
 .admin-login-form input:focus { border-color: #c88900; box-shadow: 0 0 0 2px rgba(247,178,21,.2); }
 .admin-auth-error { color: #a94232; font-family: 'DM Mono', monospace; font-size: 10px; }
+
+/* Modern navigation refresh */
+.editorial-nav { height: 84px; gap: 22px; backdrop-filter: blur(14px); background: rgba(230,230,227,.72); }
+.editorial-logo { display: inline-flex; align-items: center; gap: 0; min-width: 125px; letter-spacing: 0; }
+.editorial-logo .logo-mark { display: grid; place-items: center; width: 31px; height: 31px; margin-right: 8px; color: #252626; background: #f7b215; border-radius: 9px 9px 9px 2px; font-size: 19px; font-weight: 800; letter-spacing: -.1em; transform: rotate(-4deg); }
+.editorial-logo .logo-word { color: #252626; letter-spacing: -.13em; }
+.editorial-logo .logo-word::first-letter { color: #f7b215; }
+.editorial-nav nav { display: flex; align-items: center; gap: 7px; padding: 5px; border: 1px solid rgba(37,38,38,.16); border-radius: 999px; background: rgba(246,246,242,.54); }
+.editorial-nav nav button { padding: 10px 12px; border-radius: 999px; transition: color .2s, background .2s, transform .2s; }
+.editorial-nav nav button:hover { color: #252626; background: #f7b215; transform: translateY(-1px); }
+.nav-caption { display: none; }
+.mini-contact { padding: 11px 14px; color: #252626; border: 1px solid #252626; border-radius: 999px; transition: color .2s, background .2s, transform .2s; }
+.mini-contact:hover { color: #252626; background: #f7b215; transform: translateY(-1px); }
+.mobile-menu { align-items: center; gap: 7px; padding: 8px 10px; border: 1px solid rgba(37,38,38,.45); border-radius: 999px; font-family: 'DM Mono', monospace; font-size: 9px; text-transform: uppercase; }
+@media (max-width: 850px) { .editorial-nav { gap: 14px; }.editorial-nav nav { gap: 3px; }.editorial-nav nav button { padding: 9px 8px; }.mini-contact { padding: 9px 10px; } }
+@media (max-width: 600px) {
+  .editorial-nav { height: 70px; padding-left: 18px; padding-right: 18px; gap: 10px; }
+  .editorial-logo { min-width: 110px; font-size: 18px; }
+  .editorial-logo .logo-mark { width: 28px; height: 28px; margin-right: 7px; font-size: 17px; }
+  .nav-rule { opacity: .45; }
+  .editorial-nav nav, .mini-contact { display: none; }
+  .mobile-menu { display: inline-flex; margin-left: auto; }
+  .editorial-nav nav.nav-open { top: 70px; left: 14px; right: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 12px; border: 1px solid rgba(37,38,38,.24); border-radius: 16px; box-shadow: 0 16px 35px rgba(37,38,38,.13); background: rgba(246,246,242,.96); }
+  .editorial-nav nav.nav-open .nav-caption { display: block; grid-column: 1 / -1; padding: 7px 10px 3px; color: #8c8d88; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .12em; text-transform: uppercase; }
+  .editorial-nav nav.nav-open button { padding: 13px 12px; color: #252626; background: rgba(230,230,227,.55); text-align: left; }
+  .editorial-nav nav.nav-open button:hover { background: #f7b215; }
+}

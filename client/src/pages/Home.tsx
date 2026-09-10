@@ -116,16 +116,17 @@ export default function Home() {
       <div className="paper-mark mark-bottom">2026</div>
 
       <header className="editorial-nav">
-        <a className="editorial-logo" href="#inicio">LU<span>CAS</span><small>/DEV</small></a>
-        <div className="nav-rule" />
-        <nav className={menuOpen ? "nav-open" : ""}>
+        <a className="editorial-logo" href="#inicio" aria-label="Lucas, voltar ao início"><span className="logo-mark">L</span><span className="logo-word">UCAS</span><small>/DEV</small></a>
+        <div className="nav-rule" aria-hidden="true" />
+        <nav id="main-navigation" className={menuOpen ? "nav-open" : ""} aria-label="Navegação principal">
+          <span className="nav-caption">explore</span>
           <button onClick={() => goTo("sobre")}>Sobre</button>
-          <button onClick={() => goTo("conteudo")}>Conteúdo</button>
+          <button onClick={() => goTo("conteudo")}>Serviços</button>
           <button onClick={() => goTo("projetos")}>Projetos</button>
           <button onClick={() => goTo("contato")}>Contato</button>
         </nav>
-        <a className="mini-contact" href={whatsapp} target="_blank" rel="noreferrer">Vamos conversar <ArrowUpRight size={14} /></a>
-        <button className="mobile-menu" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menu">{menuOpen ? <X size={20} /> : <Menu size={20} />}</button>
+        <a className="mini-contact" href={whatsapp} target="_blank" rel="noreferrer"><span>Vamos conversar</span> <ArrowUpRight size={14} /></a>
+        <button className="mobile-menu" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-controls="main-navigation" aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}>{menuOpen ? <X size={20} /> : <Menu size={20} />}<span>menu</span></button>
       </header>
 
       <section className="editorial-hero" id="inicio">
