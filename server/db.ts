@@ -122,6 +122,21 @@ function toSupabaseProject(input: Partial<InsertProject>) {
   return output;
 }
 
+function storagePathFromPublicUrl(imageUrl: string | null | undefined) {
+  if (!imageUrl) return null;
+  const marker = "/storage/v1/object/public/portfolio-images/";
+  const markerIndex = imageUrl.indexOf(marker);
+  if (markerIndex < 0) return null;
+  return decodeURIComponent(imageUrl.slice(markerIndex + marker.length));
+}
+
+async function removeStoredProjectImage(imageUrl: string | null | undefined) {
+  const path = storagePathFromPublicUrl(imageUrl);
+  if (!path) return;
+  const { error } = await supabaseAdmin.storage.from("portfolio-images").remove([path]);
+  if (error) console.warn(`[Supabase Storage] Could not remove ${path}:`, error.message);
+}
+
 async function fetchProjects(query: any) {
   const { data, error } = await query;
   if (error) throw new Error(`Supabase projects error: ${error.message}`);
@@ -155,14 +170,20 @@ export async function getProjectBySlug(slug: string): Promise<Project | undefine
 }
 
 export async function updateProject(id: number, input: Partial<InsertProject>): Promise<Project | undefined> {
+  const { data: previous } = await supabaseAdmin.from("projects").select("image_url").eq("id", id).maybeSingle();
   const { data, error } = await supabaseAdmin.from("projects").update(toSupabaseProject(input)).eq("id", id).select("*").single();
   if (error) throw new Error(`Supabase project update error: ${error.message}`);
+  if (previous?.image_url && input.imageUrl !== undefined && input.imageUrl !== previous.image_url) {
+    await removeStoredProjectImage(previous.image_url);
+  }
   return data ? toProject(data as SupabaseProject) : undefined;
 }
 
 export async function deleteProject(id: number): Promise<void> {
+  const { data: previous } = await supabaseAdmin.from("projects").select("image_url").eq("id", id).maybeSingle();
   const { error } = await supabaseAdmin.from("projects").delete().eq("id", id);
   if (error) throw new Error(`Supabase project delete error: ${error.message}`);
+  await removeStoredProjectImage(previous?.image_url);
 }
 
 export async function countProjects(): Promise<number> {

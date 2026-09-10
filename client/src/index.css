@@ -161,3 +161,9 @@ button, a { font: inherit; } button { border: 0; } a { color: inherit; text-deco
 .admin-image-preview .admin-icon-button { position: absolute; top: 8px; right: 8px; background: #f7b215; }
 .admin-project-thumb { width: 58px; height: 58px; flex: 0 0 58px; object-fit: cover; border: 1px solid rgba(37,38,38,.3); filter: grayscale(.2); }
 @media (max-width: 600px) { .admin-upload-row { align-items: flex-start; flex-direction: column; gap: 8px; }.admin-upload-hint { font-size: 8px; }.admin-project-thumb { width: 48px; height: 48px; flex-basis: 48px; } }
+
+.admin-upload-status { display: flex; align-items: center; gap: 9px; padding: 10px 12px; color: #5f4b18; background: rgba(247,178,21,.24); border: 1px solid rgba(226,155,0,.45); font-family: 'DM Mono', monospace; font-size: 9px; text-transform: uppercase; }
+.admin-upload-spinner { width: 13px; height: 13px; flex: 0 0 13px; border: 2px solid rgba(37,38,38,.25); border-top-color: #252626; border-radius: 50%; animation: admin-spin .7s linear infinite; }
+.admin-upload-spin { animation: admin-spin .7s linear infinite; }
+@keyframes admin-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .admin-upload-spinner, .admin-upload-spin { animation: none; } }
