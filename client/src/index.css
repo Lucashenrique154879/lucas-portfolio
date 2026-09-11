@@ -167,3 +167,7 @@ button, a { font: inherit; } button { border: 0; } a { color: inherit; text-deco
 .admin-upload-spin { animation: admin-spin .7s linear infinite; }
 @keyframes admin-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .admin-upload-spinner, .admin-upload-spin { animation: none; } }
+
+.project-live-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 14px; }
+.project-live-link { display: inline-flex; align-items: center; gap: 7px; padding: 9px 11px; border: 1px solid currentColor; color: inherit; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; transition: background .18s ease, color .18s ease, transform .18s ease; }
+.project-live-link:hover { background: #f7b215; color: #252626; transform: translateY(-2px); }
