@@ -171,3 +171,17 @@ button, a { font: inherit; } button { border: 0; } a { color: inherit; text-deco
 .project-live-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 14px; }
 .project-live-link { display: inline-flex; align-items: center; gap: 7px; padding: 9px 11px; border: 1px solid currentColor; color: inherit; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; transition: background .18s ease, color .18s ease, transform .18s ease; }
 .project-live-link:hover { background: #f7b215; color: #252626; transform: translateY(-2px); }
+
+.admin-dropzone { display: grid; justify-items: center; gap: 8px; padding: 24px 18px; color: #5b5d59; border: 1px dashed rgba(37,38,38,.48); background: rgba(255,255,255,.28); text-align: center; cursor: pointer; transition: border-color .18s ease, background .18s ease, transform .18s ease; }
+.admin-dropzone > svg { color: #d99500; }
+.admin-dropzone strong { color: #252626; font-family: 'Space Grotesk', sans-serif; font-size: 15px; }
+.admin-dropzone > span, .admin-dropzone > small { font-family: 'DM Mono', monospace; font-size: 9px; text-transform: uppercase; }
+.admin-dropzone:hover, .admin-dropzone.is-dragging { border-color: #d99500; background: rgba(247,178,21,.18); transform: translateY(-2px); }
+.admin-dropzone .admin-upload-button { margin-top: 3px; }
+.admin-image-meta { display: flex; align-items: center; gap: 9px; min-width: 0; padding: 9px 11px; color: #555754; background: rgba(37,38,38,.06); font-family: 'DM Mono', monospace; font-size: 9px; }
+.admin-image-meta span { overflow: hidden; flex: 1; text-overflow: ellipsis; white-space: nowrap; }
+.admin-image-meta b { color: #9a6800; font-weight: 500; white-space: nowrap; }
+.admin-image-meta button { display: grid; place-items: center; padding: 3px; color: #555754; background: transparent; cursor: pointer; }
+.admin-image-meta button:hover { color: #ba2929; }
+.admin-image-preview span { position: absolute; right: 9px; bottom: 8px; padding: 5px 7px; color: #252626; background: rgba(247,178,21,.92); font-family: 'DM Mono', monospace; font-size: 8px; text-transform: uppercase; }
+@media (max-width: 600px) { .admin-dropzone { padding: 19px 12px; }.admin-dropzone strong { font-size: 13px; }.admin-image-meta { font-size: 8px; } }
