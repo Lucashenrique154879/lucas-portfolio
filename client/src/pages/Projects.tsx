@@ -44,6 +44,12 @@ function iconForProject(label: string) {
 }
 
 function linksForProject(slug: string) {
+  if (slug === "granja-de-bolso-gestao-granjas") {
+    return [
+      { label: "Acessar Granja de Bolso", url: "https://granjadebolso.online" },
+      { label: "Abrir versão alternativa", url: "https://granjadebolso.shop" },
+    ];
+  }
   if (slug !== "zalu-aplicativo-gestao-salao") return [];
   return [
     { label: "Acessar Zalu", url: "https://zalusalao.online" },
