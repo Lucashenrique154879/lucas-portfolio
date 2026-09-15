@@ -28,11 +28,42 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
   throw new Error(`No available port found starting from ${startPort}`);
 }
 
+// Block cross-site state-changing requests (CSRF defense). Browsers send an
+// Origin/Referer header on POST/PUT/PATCH/DELETE; non-browser clients (curl,
+// tests, server-to-server) do not and are allowed through.
+function csrfOriginGuard(req: express.Request, res: express.Response, next: express.NextFunction) {
+  const method = req.method.toUpperCase();
+  if (!["POST", "PUT", "PATCH", "DELETE"].includes(method)) return next();
+
+  const origin = req.headers.origin;
+  const referer = req.headers.referer;
+
+  let sourceUrl: string | null = null;
+  if (origin) sourceUrl = origin;
+  else if (typeof referer === "string") sourceUrl = referer;
+
+  if (!sourceUrl) return next();
+
+  let sourceHost: string;
+  try {
+    sourceHost = new URL(sourceUrl).host;
+  } catch {
+    return res.status(403).json({ error: "Origem inválida." });
+  }
+
+  const requestHost = req.headers.host || "";
+  if (sourceHost !== requestHost) {
+    return res.status(403).json({ error: "Origem não permitida." });
+  }
+  return next();
+}
+
 export function createApp() {
   const app = express();
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  app.use(csrfOriginGuard);
   registerStorageProxy(app);
   registerOAuthRoutes(app);
   // tRPC API

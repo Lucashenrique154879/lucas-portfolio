@@ -8,9 +8,23 @@ const dbMocks = vi.hoisted(() => ({
   createProject: vi.fn(),
   updateProject: vi.fn(),
   deleteProject: vi.fn(),
+  getProjectBySlug: vi.fn(),
+  getProjectById: vi.fn(),
+  countProjects: vi.fn(),
 }));
 
 vi.mock("./db", () => dbMocks);
+
+vi.mock("./supabase", () => ({
+  supabaseAdmin: {
+    storage: {
+      from: () => ({
+        upload: vi.fn(() => Promise.resolve({ error: null, data: { path: "portfolio/projects/x.png" } })),
+        getPublicUrl: () => ({ data: { publicUrl: "https://example.supabase.co/storage/v1/object/public/portfolio-images/portfolio/projects/x.png" } }),
+      }),
+    },
+  },
+}));
 
 function createContext(role: "admin" | "user" = "admin"): TrpcContext {
   return {

@@ -17,6 +17,7 @@ vercel login
 export VITE_SUPABASE_URL="..."
 export VITE_SUPABASE_ANON_KEY="..."
 export SUPABASE_SERVICE_ROLE_KEY="..."
+export DATABASE_URL="..."
 export JWT_SECRET="..."
 export VITE_APP_ID="..."
 export OAUTH_SERVER_URL="..."
